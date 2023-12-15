@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -27,16 +29,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '18'
     }
     buildFeatures {
-        compose true
+        compose = true
         dataBinding true
-        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.4.6'
@@ -45,6 +46,11 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -69,4 +75,32 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.20"
+    implementation 'com.todkars:shimmer-recyclerview:0.4.1'
+
+    // Data binding
+    implementation "androidx.databinding:databinding-common:4.1.0"
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-alpha02"
+
+
+}
+kapt {
+    correctErrorTypes true
 }
