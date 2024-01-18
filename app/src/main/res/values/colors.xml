@@ -15,4 +15,12 @@
     <color name="red">#FF4646</color>
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
+
+    // custom chip style
+
+    <color name="checkchipbgolor">#206200EA</color>
+    <color name="chipbgolor">@color/lightGray</color>
+
+    <color name="checkedChipTextColor">@color/colorPrimary</color>
+    <color name="ChipTextColor">@color/darkGray</color>
 </resources>

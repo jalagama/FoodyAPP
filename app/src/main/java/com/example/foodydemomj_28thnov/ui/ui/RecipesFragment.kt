@@ -1,4 +1,4 @@
-package com.example.foodydemomj_28thnov
+package com.example.foodydemomj_28thnov.ui.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodydemomj_28thnov.R
 import com.example.foodydemomj_28thnov.adapters.RecipesAdapter
 import com.example.foodydemomj_28thnov.constants.NetworkResult
-import com.example.foodydemomj_28thnov.constants.constants
 import com.example.foodydemomj_28thnov.constants.observeOnce
+import com.example.foodydemomj_28thnov.databinding.FragmentRecipesBinding
 import com.example.foodydemomj_28thnov.viewmodels.MainViewModel
 import com.example.foodydemomj_28thnov.viewmodels.RecipesViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
@@ -23,7 +25,9 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
-    private lateinit var view: View
+    private var _binding : FragmentRecipesBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private val recipesAdapter by lazy { RecipesAdapter() }
@@ -41,12 +45,18 @@ class RecipesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view = inflater.inflate(R.layout.fragment_recipes, container, false)
-        recyclerView = view.findViewById(R.id.recyclerview)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
+        recyclerView = binding.recyclerview
         setUpRecylerView()
 
+        binding.recipesFab.setOnClickListener() {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheetFragment2)
+        }
+
         readDatabse()
-        return view
+        return binding.root
     }
 
     private fun readDatabse() {
@@ -108,5 +118,11 @@ class RecipesFragment : Fragment() {
     }
     fun hideShimmerEffect() {
         recyclerView.hideShimmer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+
     }
 }
